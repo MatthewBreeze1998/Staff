@@ -30,9 +30,9 @@ namespace Could_System_dev_ops
         {
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<ProductsDataBaseContext>(options =>
+            services.AddDbContext<StaffDataBaseContext>(options =>
             {
-                String connection = Configuration.GetConnectionString("ProductsConnectionString");
+                String connection = Configuration.GetConnectionString("StaffConnectionString");
                 options.UseSqlServer(connection);
             });
             services.AddSingleton<StaffRepo, FakeStaffRepo>();
