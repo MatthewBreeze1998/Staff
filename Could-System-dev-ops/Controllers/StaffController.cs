@@ -30,15 +30,20 @@ namespace Could_System_dev_ops.Controllers
         }
         [Route("GetAllStaff")]
         [HttpGet]
-        public IEnumerable<StaffModel> GetAllStaff()
+        public IEnumerable<StaffModel> GetStaff()
         {
-           return _StaffRepo.GetStaffAll();
+           return _StaffRepo.GetStaff();
         }
 
         [Route("GetStaff/{id}")]
         [HttpGet]
-        public ActionResult<StaffModel> GetStaff(int id)
+        public ActionResult<StaffModel> GetStaff(StaffModel staff)
         {
+           
+            if(staff == null)
+            {
+                return GetStaff();
+            }
             StaffModel createstaff = _StaffRepo.GetStaff(id);
 
             if (createstaff == null)
@@ -47,18 +52,23 @@ namespace Could_System_dev_ops.Controllers
             }
             return createstaff;
         }
-        [Route("StaffPermissions/{id}")]
+        [Route("StaffPermissions/{permissons}")]
         [HttpPost]
-        public ActionResult<StaffPermissonsModel> GetPermissons(int id)
+        public ActionResult<StaffPermissonsModel> GetPermissons(StaffPermissonsModel permissons)
         {
-            if (id == 0)
+            if (permissons == null)
             {
                 return NotFound();
             }
-            _StaffRepo.GetStaffPermissions(id);
-            StaffPermissonsModel staffPermissons = _StaffRepo.GetStaffPermissions(id);
+            if(permissons.StaffId < 0 )
+            {
+                return NotFound();
+            }                   
+            StaffPermissonsModel staffPermissons = _StaffRepo.GetStaffPermissions(permissons);
             return staffPermissons;
         }
+
+
         [Route("purchaseAbility/{id}")]
         [HttpPost]
         public async Task<ActionResult<UsersModel>> SetPurchaseAbilty(int id)
@@ -73,26 +83,37 @@ namespace Could_System_dev_ops.Controllers
         }
         [Route("DeleteStaff/{id}")]
         [HttpPost]
-        public async Task<ActionResult<StaffModel>> DeleteStaff(int id)
+        public async Task<ActionResult<StaffModel>> DeleteStaff(StaffModel staff)
         {
-            if (id == 0)
+            if (staff == null)
             {
                 return NotFound();
 
             }
-            StaffModel user = _StaffRepo.DeleteStaff(id);
-            return user;
-        }
-        [Route("editstaff/{id}")]
-        [HttpPost]
-        public async Task<ActionResult<StaffModel>> EditStaff(StaffModel User)
-        {
-            if (User == null)
+            if(staff.StaffId <= 0)
             {
                 return NotFound();
             }
-            StaffModel Useredit = _StaffRepo.EditStaff(User);
-            return Useredit;
+
+            StaffModel Remove = _StaffRepo.DeleteStaff(staff);
+            return Remove;
+        }
+
+        [Route("editstaff/{id}")]
+        [HttpPost]
+        public async Task<ActionResult<StaffModel>> EditStaff(StaffModel staff)
+        {
+            if (staff == null)
+            {
+                return NotFound();
+            }
+            if(staff.StaffId <= 0)
+            {
+                return NotFound();
+            }
+            StaffModel EditiedStaff = _StaffRepo.EditStaff(staff);
+           
+            return EditiedStaff;
         }
         
 
