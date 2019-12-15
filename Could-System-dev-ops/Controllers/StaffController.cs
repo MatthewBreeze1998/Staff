@@ -11,10 +11,12 @@ using Microsoft.EntityFrameworkCore;
 namespace Could_System_dev_ops.Controllers
 {
     [Route("api/Staff")]
+    [ApiController]
     public class StaffController : Controller
     {
 
         private StaffRepo _StaffRepo;
+        private IUserRepositry _userRepositry;
         public StaffController(StaffRepo staff)
         {
             _StaffRepo = staff;
@@ -42,9 +44,9 @@ namespace Could_System_dev_ops.Controllers
            
             if(staff == null)
             {
-                return GetStaff();
+                return  NotFound();
             }
-            StaffModel createstaff = _StaffRepo.GetStaff(id);
+            StaffModel createstaff = _StaffRepo.GetStaff(staff);
 
             if (createstaff == null)
             {
@@ -60,7 +62,7 @@ namespace Could_System_dev_ops.Controllers
             {
                 return NotFound();
             }
-            if(permissons.StaffId < 0 )
+            if(permissons.StaffId ==  0)
             {
                 return NotFound();
             }                   
@@ -71,19 +73,18 @@ namespace Could_System_dev_ops.Controllers
 
         [Route("purchaseAbility/{id}")]
         [HttpPost]
-        public async Task<ActionResult<UsersModel>> SetPurchaseAbilty(int id)
+        public async Task<ActionResult<UserMetaData>> SetPurchaseAbilty(UserMetaData user)
         {
 
-            if (id == 0)
+            if (user == null)
             {
                 return NotFound();
             }
-            UsersModel User = _StaffRepo.SetPurchaseAbility(id);
-            return User;
+            await _userRepositry.Edituser(user);
+            return user;
         }
         [Route("DeleteStaff/{id}")]
-        [HttpPost]
-        public async Task<ActionResult<StaffModel>> DeleteStaff(StaffModel staff)
+         [HttpPost]     public async Task<ActionResult<StaffModel>> DeleteStaff(StaffModel staff)
         {
             if (staff == null)
             {

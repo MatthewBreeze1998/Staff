@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Could_System_dev_ops.Repo
 {
-    public class EntityFrameWorkStaffRepositry : IRepository<ProductsModel>
+    public class EntityFrameWorkStaffRepositry : IRepository<StaffModel>
     {
         private readonly IServiceScope _scope;
         private readonly StaffDataBaseContext _context;

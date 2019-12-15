@@ -18,12 +18,14 @@ namespace Could_System_dev_ops
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            CurrentEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment CurrentEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -36,6 +38,18 @@ namespace Could_System_dev_ops
                 options.UseSqlServer(connection);
             });
             services.AddSingleton<StaffRepo, FakeStaffRepo>();
+
+            if (CurrentEnvironment.IsDevelopment())
+            {
+                services.AddSingleton<StaffRepo, FakeStaffRepo>();
+                services.AddSingleton<IUserRepositry, SuccessIUserService>();
+            }
+            else
+            {
+                services.AddSingleton<StaffRepo, FakeStaffRepo>();
+                services.AddHttpClient<IUserRepositry, LocalHostUserService>();
+            }
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
