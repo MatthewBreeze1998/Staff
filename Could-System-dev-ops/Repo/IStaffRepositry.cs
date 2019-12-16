@@ -16,10 +16,12 @@ namespace Could_System_dev_ops.Repo
 
         StaffModel EditStaff(StaffModel staff);
 
-        IEnumerable<Models.StaffModel> GetAllStaff();
+        IEnumerable<StaffModel> GetAllStaff();
 
         StaffPermissonsModel EditPermissions(StaffPermissonsModel permissonsModel);
 
         StaffPermissonsModel GetStaffPermissions(int id);
+
+        IEnumerable<StaffPermissonsModel> GetAllStaffPermissions();
     }
 }

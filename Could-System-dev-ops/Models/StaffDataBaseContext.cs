@@ -13,7 +13,7 @@ namespace Could_System_dev_ops.Models
 
         public StaffDataBaseContext(DbContextOptions<StaffDataBaseContext> options) : base(options)
         {
-            Database.Migrate();
+            Database.Migrate();// creates or migrates data if data base has been created 
         }
     }
 }
