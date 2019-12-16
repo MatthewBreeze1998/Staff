@@ -10,111 +10,111 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Could_System_dev_ops.Controllers
 {
-    [Route("api/Staff")]
+    [Route("api/Staff")]// contoller Route
     [ApiController]
     public class StaffController : Controller
     {
 
-        private StaffRepo _StaffRepo;
-        private IUserRepositry _userRepositry;
+        private StaffRepo _StaffRepo; // Staff Interface
+        private IUserRepositry _userRepositry; // User Interface
         public StaffController(StaffRepo staff)
         {
             _StaffRepo = staff;
         }
+        [Route("CreateStaff")]//Route
         [HttpPost]
         public async Task<ActionResult<StaffModel>> CreateStaff(StaffModel staff)
         {
-            _StaffRepo.CreateStaff(staff);
-
-            return CreatedAtAction(nameof(GetStaff), new { id = staff.StaffId }, staff);
-
-
+            _StaffRepo.CreateStaff(staff);// call interface create function with Staff model 
+            return staff;// return created staff
         }
-        [Route("GetAllStaff")]
+
+
+        [Route("GetAllStaff")]// Route
         [HttpGet]
         public IEnumerable<StaffModel> GetStaff()
         {
-           return _StaffRepo.GetStaff();
-        }
+            return _StaffRepo.GetAllStaff();// calls and return all staff as IEnumerbale
+        }// Get All staff method
 
-        [Route("GetStaff/{id}")]
+        [Route("GetStaff/{id}")]//Route
         [HttpGet]
-        public ActionResult<StaffModel> GetStaff(StaffModel staff)
+        public ActionResult<StaffModel> GetStaff(int id)
         {
-           
-            if(staff == null)
-            {
-                return  NotFound();
-            }
-            StaffModel createstaff = _StaffRepo.GetStaff(staff);
 
-            if (createstaff == null)
+            if (id <= 0)// check to valid id
             {
-                return NotFound();
-            }
-            return createstaff;
+                return NotFound(); // not found if invalid
+            };
+            return _StaffRepo.GetStaff(id);  // retuns staff
         }
-        [Route("StaffPermissions/{permissons}")]
+        [Route("StaffPermissions/{permissons}")] // route
         [HttpPost]
-        public ActionResult<StaffPermissonsModel> GetPermissons(StaffPermissonsModel permissons)
+        public ActionResult<StaffPermissonsModel> GetPermissons(int id)
         {
-            if (permissons == null)
+            if (id <= 0) // checks valid id 
+            {
+                return NotFound();// not found if invalid
+            }
+            return _StaffRepo.GetStaffPermissions(id); // retruns staff permissons
+        }//end
+
+        [Route("EditPermissons")]
+        [HttpPost]
+        public async Task<ActionResult<StaffPermissonsModel>> EditPermissons(StaffPermissonsModel Permissons)
+        {
+            if(Permissons == null)// checks permissons isnt null
             {
                 return NotFound();
             }
-            if(permissons.StaffId ==  0)
+            if(Permissons.StaffId <= 0)// checks valid id
             {
                 return NotFound();
-            }                   
-            StaffPermissonsModel staffPermissons = _StaffRepo.GetStaffPermissions(permissons);
-            return staffPermissons;
+            }
+            return _StaffRepo.EditPermissions(Permissons); // returns edited data
         }
 
-
-        [Route("purchaseAbility/{id}")]
+        [Route("purchaseAbility/{id}")]//route
         [HttpPost]
         public async Task<ActionResult<UserMetaData>> SetPurchaseAbilty(UserMetaData user)
         {
 
-            if (user == null)
+            if (user == null) // checks data is not null
             {
-                return NotFound();
+                return NotFound();// not found if user is null
             }
-            await _userRepositry.Edituser(user);
-            return user;
+            await _userRepositry.Edituser(user);// calls user
+            return user; // returns ediited data
         }
-        [Route("DeleteStaff/{id}")]
-         [HttpPost]     public async Task<ActionResult<StaffModel>> DeleteStaff(StaffModel staff)
+        [Route("DeleteStaff/{id}")]//rotute
+        [HttpPost]     
+        public async Task<ActionResult<StaffModel>> DeleteStaff(StaffModel staff)
         {
-            if (staff == null)
+            if (staff == null)// checks staff is not null 
             {
-                return NotFound();
+                return NotFound();// return not found if null 
 
             }
-            if(staff.StaffId <= 0)
+            if(staff.StaffId <= 0)// checks user id
             {
-                return NotFound();
+                return NotFound();// return not found if null 
             }
-
-            StaffModel Remove = _StaffRepo.DeleteStaff(staff);
-            return Remove;
+            return _StaffRepo.DeleteStaff(staff); // calls api and returns deleted data
         }
 
         [Route("editstaff/{id}")]
         [HttpPost]
         public async Task<ActionResult<StaffModel>> EditStaff(StaffModel staff)
         {
-            if (staff == null)
+            if (staff == null)// checks staff is not null 
             {
-                return NotFound();
+                return NotFound();// return not found if null 
             }
-            if(staff.StaffId <= 0)
+            if(staff.StaffId <= 0)// checks user id
             {
-                return NotFound();
+                return NotFound();// return not found if null 
             }
-            StaffModel EditiedStaff = _StaffRepo.EditStaff(staff);
-           
-            return EditiedStaff;
+            return _StaffRepo.EditStaff(staff);// returns edited user
         }
         
 

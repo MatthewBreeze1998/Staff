@@ -7,20 +7,19 @@ using System.Threading.Tasks;
 namespace Could_System_dev_ops.Repo
 {
     public interface StaffRepo
-
     {
-       
-
         StaffModel DeleteStaff(StaffModel staff);
        
         StaffModel CreateStaff(StaffModel staff);
         
-        StaffModel GetStaff(StaffModel staff);
+        StaffModel GetStaff(int id);
 
         StaffModel EditStaff(StaffModel staff);
 
-        IEnumerable<Models.StaffModel> GetStaff();
+        IEnumerable<Models.StaffModel> GetAllStaff();
 
-        StaffPermissonsModel GetStaffPermissions(StaffPermissonsModel permissons);
+        StaffPermissonsModel EditPermissions(StaffPermissonsModel permissonsModel);
+
+        StaffPermissonsModel GetStaffPermissions(int id);
     }
 }

@@ -49,10 +49,10 @@ namespace Could_System_dev_ops.Repo
 
         }
 
-        public StaffModel GetStaff(StaffModel staff)
+        public StaffModel GetStaff(int id)
         {
             
-            return _staffModelsList.FirstOrDefault(x => staff.StaffId == x.StaffId);
+            return _staffModelsList.FirstOrDefault(x => id  == x.StaffId);
         }
 
         public StaffModel EditStaff(StaffModel staff)
@@ -61,25 +61,25 @@ namespace Could_System_dev_ops.Repo
             return staff;
         }
 
-        
-        
-    
-        public IEnumerable<StaffModel> GetStaff()
+        public IEnumerable<StaffModel> GetAllStaff()
         {
             return _staffModelsList.AsEnumerable<StaffModel>();
         }
 
-        private List<UserMetaData> _UserList;
-      
-
-        public StaffPermissonsModel GetStaffPermissions(StaffPermissonsModel permissons)
+        public StaffPermissonsModel GetStaffPermissions(int id)
         {
-            return _staffPermissonsList.FirstOrDefault(x => x.StaffId == permissons.StaffId);
+            return _staffPermissonsList.FirstOrDefault(x => x.StaffId == id);
         }
 
-        public IEnumerable<StaffPermissonsModel> GetStaffPermissions(int? StaffId, Boolean CanDeleteUser, Boolean CanHideReview, Boolean SetPurchaseAbility, Boolean ViewUsers, Boolean ViewOrderList, Boolean ViewPendingOrders, Boolean ViewSetReSale, Boolean PurchaseRequest, Boolean ViewStocklevel, Boolean AddStaff, Boolean RemoveStaff, Boolean authorisePermissons, Boolean ApproveStaffPurchase)
+        public IEnumerable<StaffPermissonsModel> GetStaffPermissions()
         {
             return _staffPermissonsList.AsEnumerable<StaffPermissonsModel>();
+        }
+
+        public StaffPermissonsModel EditPermissions(StaffPermissonsModel permissonsModel)
+        {
+            _staffPermissonsList[_staffPermissonsList.IndexOf(_staffPermissonsList.FirstOrDefault(x => x.StaffId == permissonsModel.StaffId))] = permissonsModel;
+            return permissonsModel;
         }
     }
 }
