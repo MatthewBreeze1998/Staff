@@ -15,24 +15,28 @@ namespace Could_System_dev_ops.Controllers
     public class StaffController : Controller
     {
 
-        private StaffRepo _StaffRepo; // Staff Interface
+        private IStaffRepositry _StaffRepo; // Staff Interface
         private IUserRepositry _userRepositry; // User Interface
-        public StaffController(StaffRepo staff)
+        public StaffController(IStaffRepositry staff)
         {
             _StaffRepo = staff;
         }
         [Route("CreateStaff")]//Route
         [HttpPost]
-        public async Task<ActionResult<StaffModel>> CreateStaff(StaffModel staff)
+        public  ActionResult<StaffModel> CreateStaff(StaffModel staff)
         {
-            _StaffRepo.CreateStaff(staff);// call interface create function with Staff model 
-            return staff;// return created staff
+            if(staff == null)
+            {
+                return NotFound();
+            }
+            // call interface create function with Staff model 
+            return _StaffRepo.CreateStaff(staff);// return created staff
         }
 
 
         [Route("GetAllStaff")]// Route
         [HttpGet]
-        public IEnumerable<StaffModel> GetStaff()
+        public IEnumerable<StaffModel> GetStaffs()
         {
             return _StaffRepo.GetAllStaff();// calls and return all staff as IEnumerbale
         }// Get All staff method
@@ -104,7 +108,7 @@ namespace Could_System_dev_ops.Controllers
 
         [Route("editstaff/{id}")]
         [HttpPost]
-        public async Task<ActionResult<StaffModel>> EditStaff(StaffModel staff)
+        public ActionResult<StaffModel> EditStaff(StaffModel staff)
         {
             if (staff == null)// checks staff is not null 
             {

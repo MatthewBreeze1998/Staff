@@ -37,16 +37,16 @@ namespace Could_System_dev_ops
                 String connection = Configuration.GetConnectionString("StaffConnectionString");
                 options.UseSqlServer(connection);
             });
-            services.AddSingleton<StaffRepo, FakeStaffRepo>();
+            services.AddSingleton<IStaffRepositry, FakeStaffRepo>();
 
             if (CurrentEnvironment.IsDevelopment())
             {
-                services.AddSingleton<StaffRepo, FakeStaffRepo>();
+                services.AddSingleton<IStaffRepositry, FakeStaffRepo>();
                 services.AddSingleton<IUserRepositry, SuccessIUserService>();
             }
             else
             {
-                services.AddSingleton<StaffRepo, FakeStaffRepo>();
+                services.AddSingleton<IStaffRepositry, FakeStaffRepo>();
                 services.AddHttpClient<IUserRepositry, LocalHostUserService>();
             }
 

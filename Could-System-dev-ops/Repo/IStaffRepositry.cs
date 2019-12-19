@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Could_System_dev_ops.Repo
 {
-    public interface StaffRepo
+    public interface IStaffRepositry
     {
         StaffModel DeleteStaff(StaffModel staff);
        
