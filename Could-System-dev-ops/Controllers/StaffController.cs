@@ -51,6 +51,7 @@ namespace Could_System_dev_ops.Controllers
                 return NotFound(); // not found if invalid
             };
             return _StaffRepo.GetStaff(id);  // retuns staff
+       
         }
         [Route("StaffPermissions/{permissons}")] // route
         [HttpPost]
@@ -112,11 +113,11 @@ namespace Could_System_dev_ops.Controllers
         {
             if (staff == null)// checks staff is not null 
             {
-                return NotFound();// return not found if null 
+                return BadRequest();// return not found if null 
             }
             if(staff.StaffId <= 0)// checks user id
             {
-                return NotFound();// return not found if null 
+                return BadRequest();// return not found if null 
             }
             return _StaffRepo.EditStaff(staff);// returns edited user
         }

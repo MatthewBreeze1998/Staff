@@ -4,6 +4,7 @@ using Could_System_dev_ops.Repo;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 
 namespace ControllerTest
@@ -80,15 +81,15 @@ namespace ControllerTest
       
         }
         [Test]
-        public void CreateProduct_invalid_object()
+        public void CreateProduct_invalid_Shouldobject()
         {
 
             Assert.IsNotNull(_staffRepo);
             Assert.IsNotNull(_staffController);
-            StaffModel Staff = new StaffModel() { StaffId = 0, FirstName = "", LastName = "", ContactNumebr = 0, Email = "", PayRoll = 0 };
+            StaffModel Staff = null;
             Assert.IsNotNull(Staff);
 
-            int currentMaxId = _staffController.GetStaffs().Value.Max();
+            int currentMaxId = _staffController.GetStaffs().Max( x => x.StaffId);
             Assert.GreaterOrEqual(currentMaxId, 1);
 
             ActionResult<StaffModel> result = _staffController.CreateStaff(Staff);
@@ -114,12 +115,15 @@ namespace ControllerTest
         }
         
         [Test]
-        public void EditUser_valid_Object()
+        public void EditStaff_valid_Object()
         {
+
             Assert.IsNotNull(_staffRepo);
             Assert.IsNotNull(_staffController);
-            StaffModel UpdateStaff = new StaffModel() { StaffId = 2, FirstName = "josh", LastName = "white", ContactNumebr = 11212213129, Email = "josh_white@hotmail.co.uk", PayRoll = 12533123 };
+            StaffModel UpdateStaff = _staffController.GetStaff(2).Value;
             Assert.IsNotNull(UpdateStaff);
+
+            UpdateStaff.LastName = "fgt";
 
 
             ActionResult<StaffModel> result = _staffController.EditStaff(UpdateStaff);
@@ -135,12 +139,22 @@ namespace ControllerTest
             StaffModel StaffValue = (StaffModel)UpdatedStaffResult.Value;
             Assert.IsNotNull(StaffValue);
 
-            Assert.AreEqual(UpdateStaff, StaffValue.StaffId);
             Assert.AreEqual(UpdateStaff.FirstName, StaffValue.FirstName);
-            Assert.AreEqual(UpdateStaff.LastName, StaffValue.LastName);
-            Assert.AreEqual(UpdateStaff.Email, StaffValue.Email);
-            Assert.AreEqual(UpdateStaff.PayRoll, StaffValue.PayRoll);
+
         }
-    
+        public void EditStaff_invalid_Object()
+        {
+            Assert.IsNotNull(_staffRepo);
+            Assert.IsNotNull(_staffController);
+            StaffModel UpdateStaff = null;
+            Assert.IsNotNull(UpdateStaff);
+
+            ActionResult<StaffModel> result = _staffController.EditStaff(UpdateStaff);
+            Assert.IsNotNull(result);
+
+            ActionResult StaffResult = result.Result;
+            Assert.AreEqual(StaffResult.GetType(), typeof(BadRequestResult));
+        }
+
     }
 }
