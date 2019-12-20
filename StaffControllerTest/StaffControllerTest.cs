@@ -56,7 +56,7 @@ namespace ControllerTest
             StaffModel Staff = new StaffModel() { StaffId = 4, FirstName = "josh", LastName = "white", ContactNumebr = 11212213129, Email = "josh_white@hotmail.co.uk", PayRoll = 12533123 };
             Assert.IsNotNull(Staff);
 
-            int currentMaxId = _staffController.GetStaffs().Value.Max();
+            int currentMaxId = _staffController.GetStaffs().Max(x => x.StaffId);
             Assert.GreaterOrEqual(currentMaxId, 1);
 
             ActionResult<StaffModel> result = _staffController.CreateStaff(Staff);
@@ -78,7 +78,7 @@ namespace ControllerTest
             Assert.AreEqual(Staff.LastName, UserValue.LastName);
             Assert.AreEqual(Staff.Email, UserValue.Email);
             Assert.AreEqual(Staff.PayRoll, UserValue.PayRoll);
-      
+
         }
         [Test]
         public void CreateProduct_invalid_Shouldobject()
@@ -89,7 +89,7 @@ namespace ControllerTest
             StaffModel Staff = null;
             Assert.IsNotNull(Staff);
 
-            int currentMaxId = _staffController.GetStaffs().Max( x => x.StaffId);
+            int currentMaxId = _staffController.GetStaffs().Max(x => x.StaffId);
             Assert.GreaterOrEqual(currentMaxId, 1);
 
             ActionResult<StaffModel> result = _staffController.CreateStaff(Staff);
@@ -113,7 +113,7 @@ namespace ControllerTest
             Assert.AreNotEqual(Staff.PayRoll, StaffValue.PayRoll);
 
         }
-        
+
         [Test]
         public void EditStaff_valid_Object()
         {
@@ -124,7 +124,6 @@ namespace ControllerTest
             Assert.IsNotNull(UpdateStaff);
 
             UpdateStaff.LastName = "fgt";
-
 
             ActionResult<StaffModel> result = _staffController.EditStaff(UpdateStaff);
             Assert.IsNotNull(result);
@@ -142,6 +141,7 @@ namespace ControllerTest
             Assert.AreEqual(UpdateStaff.FirstName, StaffValue.FirstName);
 
         }
+        [Test]
         public void EditStaff_invalid_Object()
         {
             Assert.IsNotNull(_staffRepo);
@@ -155,6 +155,43 @@ namespace ControllerTest
             ActionResult StaffResult = result.Result;
             Assert.AreEqual(StaffResult.GetType(), typeof(BadRequestResult));
         }
+        [Test]
+        public void DeleteStaff_valid_shouldObject()
+        {
+            Assert.IsNotNull(_staffRepo);
+            Assert.IsNotNull(_staffController);
+            StaffModel DeleteStaff = _staffController.GetStaff(1).Value;
+            Assert.IsNotNull(DeleteStaff);
+
+            _staffController.DeleteStaff(DeleteStaff);
+
+            ActionResult<StaffModel> result = _staffController.GetStaff(1);
+            Assert.IsNotNull(result);
+
+            ActionResult StaffResult = result.Result;
+            Assert.AreEqual(StaffResult.GetType(), typeof(NotFoundResult));
+
+        }
+        [Test]
+        public void DeleteStaff_invalid_shouldObject()
+        {
+            Assert.IsNotNull(_staffRepo);
+            Assert.IsNotNull(_staffController);
+            StaffModel DeleteStaff = null;
+            Assert.IsNotNull(DeleteStaff);
+
+            _staffController.DeleteStaff(DeleteStaff);
+
+            ActionResult<StaffModel> result = _staffController.GetStaff(1);
+            Assert.IsNotNull(result);
+
+            ActionResult StaffResult = result.Result;
+            Assert.AreEqual(StaffResult.GetType(), typeof(NotFoundResult));
+
+        }
+
 
     }
+
+
 }

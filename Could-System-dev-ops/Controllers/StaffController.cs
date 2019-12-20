@@ -93,7 +93,7 @@ namespace Could_System_dev_ops.Controllers
         }
         [Route("DeleteStaff/{id}")]//rotute
         [HttpPost]     
-        public async Task<ActionResult<StaffModel>> DeleteStaff(StaffModel staff)
+        public  ActionResult<StaffModel> DeleteStaff(StaffModel staff)
         {
             if (staff == null)// checks staff is not null 
             {
