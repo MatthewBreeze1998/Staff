@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Staff App", "Could-System-dev-ops\Staff App.csproj", "{21DCD99E-B4B5-4433-AFC9-B8345C927162}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffControllerTest", "StaffControllerTest\StaffControllerTest.csproj", "{EAA6B60B-7CD2-42A1-B059-12DD15C55CFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffControllerTest", "StaffControllerTest\StaffControllerTest.csproj", "{EAA6B60B-7CD2-42A1-B059-12DD15C55CFC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThAmCo.Auth", "..\auth\ThAmCo.Auth\ThAmCo.Auth.csproj", "{CAF7BE0F-7E5B-4FFC-8F54-52B6012D82C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{EAA6B60B-7CD2-42A1-B059-12DD15C55CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAA6B60B-7CD2-42A1-B059-12DD15C55CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAA6B60B-7CD2-42A1-B059-12DD15C55CFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAF7BE0F-7E5B-4FFC-8F54-52B6012D82C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAF7BE0F-7E5B-4FFC-8F54-52B6012D82C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAF7BE0F-7E5B-4FFC-8F54-52B6012D82C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAF7BE0F-7E5B-4FFC-8F54-52B6012D82C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
