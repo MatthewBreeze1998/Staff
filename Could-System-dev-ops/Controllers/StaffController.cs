@@ -32,7 +32,36 @@ namespace Could_System_dev_ops.Controllers
             // call interface create function with Staff model 
             return _StaffRepo.CreateStaff(staff);// return created staff
         }
+        [Route("DeleteStaff/{id}")]//rotute
+        [HttpPost]
+        public ActionResult<StaffModel> DeleteStaff(StaffModel staff)
+        {
+            if (staff == null)// checks staff is not null 
+            {
+                return NotFound();// return not found if null 
 
+            }
+            if (staff.StaffId <= 0)// checks user id
+            {
+                return NotFound();// return not found if null 
+            }
+            return _StaffRepo.DeleteStaff(staff); // calls api and returns deleted data
+        }
+
+        [Route("editstaff/{id}")]
+        [HttpPost]
+        public ActionResult<StaffModel> EditStaff(StaffModel staff)
+        {
+            if (staff == null)// checks staff is not null 
+            {
+                return BadRequest();// return not found if null 
+            }
+            if (staff.StaffId <= 0)// checks user id
+            {
+                return BadRequest();// return not found if null 
+            }
+            return _StaffRepo.EditStaff(staff);// returns edited user
+        }
 
         [Route("GetAllStaff")]// Route
         [HttpGet]
@@ -53,7 +82,42 @@ namespace Could_System_dev_ops.Controllers
             return _StaffRepo.GetStaff(id);  // retuns staff
        
         }
-        [Route("StaffPermissions/{permissons}")] // route
+
+        [Route("createstaffpermissions")]
+        [HttpPost]
+        public ActionResult<StaffPermissonsModel> CreateStaffPermissions(StaffPermissonsModel staffPermissons)
+        {
+            if (staffPermissons == null)// checks staffPermissons is not null 
+            {
+                return BadRequest();// return not found if null 
+            }
+            if (staffPermissons.StaffId <= 0)// checks user id
+            {
+                return BadRequest();// return not found if null 
+            }
+            return _StaffRepo.CreateStaffPermissons(staffPermissons);// returns new staffpermissons
+        }
+
+        [Route("DeleteStaffStaffPermissons")]//rotute
+        [HttpPost]
+        public ActionResult<StaffPermissonsModel> DeleteStaffPermissons(StaffPermissonsModel staffPermissons)
+        {
+            if (staffPermissons == null)// checks staffPermissons is not null 
+            {
+                return BadRequest();// return not found if null 
+
+            }
+            if (staffPermissons.StaffId <= 0)// checks user id
+            {
+                return BadRequest();// return not found if null 
+            }
+            return _StaffRepo.DeleteStaffPermissions(staffPermissons); // calls api and returns deleted data
+        }
+
+       
+
+
+        [Route("StaffPermissions")] // route
         [HttpPost]
         public ActionResult<StaffPermissonsModel> GetPermissons(int id)
         {
@@ -91,36 +155,7 @@ namespace Could_System_dev_ops.Controllers
             await _userRepositry.Edituser(user);// calls user
             return user; // returns ediited data
         }
-        [Route("DeleteStaff/{id}")]//rotute
-        [HttpPost]     
-        public  ActionResult<StaffModel> DeleteStaff(StaffModel staff)
-        {
-            if (staff == null)// checks staff is not null 
-            {
-                return NotFound();// return not found if null 
-
-            }
-            if(staff.StaffId <= 0)// checks user id
-            {
-                return NotFound();// return not found if null 
-            }
-            return _StaffRepo.DeleteStaff(staff); // calls api and returns deleted data
-        }
-
-        [Route("editstaff/{id}")]
-        [HttpPost]
-        public ActionResult<StaffModel> EditStaff(StaffModel staff)
-        {
-            if (staff == null)// checks staff is not null 
-            {
-                return BadRequest();// return not found if null 
-            }
-            if(staff.StaffId <= 0)// checks user id
-            {
-                return BadRequest();// return not found if null 
-            }
-            return _StaffRepo.EditStaff(staff);// returns edited user
-        }
+        
         
 
     }

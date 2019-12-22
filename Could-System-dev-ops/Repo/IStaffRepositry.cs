@@ -18,7 +18,11 @@ namespace Could_System_dev_ops.Repo
 
         IEnumerable<StaffModel> GetAllStaff();
 
+        StaffPermissonsModel CreateStaffPermissons(StaffPermissonsModel newStaffPermissions);
+
         StaffPermissonsModel EditPermissions(StaffPermissonsModel permissonsModel);
+
+        StaffPermissonsModel DeleteStaffPermissions(StaffPermissonsModel permissonsModel);
 
         StaffPermissonsModel GetStaffPermissions(int id);
 

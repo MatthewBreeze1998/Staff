@@ -8,21 +8,11 @@ namespace Could_System_dev_ops.Repo
 {
     public interface IRepository<Product>
     {
-
-
-
         bool UpdateObject(StaffModel Object, bool Return);
 
 
         StaffModel CreateObject(StaffModel Object);
 
         IEnumerable<Models.StaffModel> GetObject();
-
-
-
-
-
-
-
     }
 }

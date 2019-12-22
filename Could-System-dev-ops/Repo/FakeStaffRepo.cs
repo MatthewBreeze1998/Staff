@@ -64,6 +64,19 @@ namespace Could_System_dev_ops.Repo
             return _staffModelsList.AsEnumerable<StaffModel>();// returns all staff as IEnumerable
         }
 
+        public StaffPermissonsModel CreateStaffPermissons(StaffPermissonsModel newStaffPermissions)
+        {
+            _staffPermissonsList.Add(newStaffPermissions);// adds new permissons
+            return newStaffPermissions;// returns new permissons 
+        }
+
+        public StaffPermissonsModel DeleteStaffPermissions(StaffPermissonsModel permissonsModel)
+        {
+            _staffPermissonsList.Remove(_staffPermissonsList.FirstOrDefault(x => permissonsModel.StaffId == x.StaffId)); // finds first staff with given id then removes them form the fake data
+            return permissonsModel;
+        
+        }
+
         public StaffPermissonsModel GetStaffPermissions(int id)
         {
             return _staffPermissonsList.FirstOrDefault(x => x.StaffId == id);
@@ -80,5 +93,7 @@ namespace Could_System_dev_ops.Repo
             return _staffPermissonsList[_staffPermissonsList.IndexOf(_staffPermissonsList.FirstOrDefault(x => x.StaffId == permissonsModel.StaffId))] = permissonsModel;
             //gets the index for the data with the staff id form the permissons passed through then replaeces the index with the new one 
         }
+
+    
     }
 }
