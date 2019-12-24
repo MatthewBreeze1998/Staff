@@ -47,7 +47,7 @@ namespace Could_System_dev_ops.Repo
             return staff; // returns deleted data
         }
 
-        public StaffModel GetStaff(int id)
+        public StaffModel GetStaff(int? id)
         {
             return _staffModelsList.FirstOrDefault(x => id  == x.StaffId);
             // returns first in the list with the id that matches the id pasded threw when its call

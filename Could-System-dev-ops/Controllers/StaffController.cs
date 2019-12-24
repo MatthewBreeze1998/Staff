@@ -29,10 +29,14 @@ namespace Could_System_dev_ops.Controllers
         {
             if(staff == null)
             {
-                return NotFound();
+                return BadRequest();
             }
-            // call interface create function with Staff model 
-            return _StaffRepo.CreateStaff(staff);// return created staff
+
+         StaffModel newStaff  = _StaffRepo.CreateStaff(staff);
+
+            return CreatedAtAction(nameof(GetStaff), new { id = staff.StaffId }, newStaff);
+                
+               // return created staff
         }
         [Route("DeleteStaff/{id}")]//rotute
         [HttpPost]
@@ -40,12 +44,12 @@ namespace Could_System_dev_ops.Controllers
         {
             if (staff == null)// checks staff is not null 
             {
-                return NotFound();// return not found if null 
+                return BadRequest();// return not found if null 
 
             }
             if (staff.StaffId <= 0)// checks user id
             {
-                return NotFound();// return not found if null 
+                return BadRequest();// return not found if null 
             }
             return _StaffRepo.DeleteStaff(staff); // calls api and returns deleted data
         }
@@ -62,7 +66,9 @@ namespace Could_System_dev_ops.Controllers
             {
                 return BadRequest();// return not found if null 
             }
-            return _StaffRepo.EditStaff(staff);// returns edited user
+            _StaffRepo.EditStaff(staff);// returns edited user
+            
+            return CreatedAtAction(nameof(GetStaff), new { id = staff.StaffId }, staff);// returns edited user
         }
 
         [Route("GetAllStaff")]// Route
@@ -74,14 +80,17 @@ namespace Could_System_dev_ops.Controllers
 
         [Route("GetStaff/{id}")]//Route
         [HttpGet]
-        public ActionResult<StaffModel> GetStaff(int id)
+        public ActionResult<StaffModel> GetStaff(int? id)
         {
 
-            if (id <= 0)// check to valid id
+            if (id == null)// check to valid id
             {
-                return NotFound(); // not found if invalid
+                return BadRequest(); // not found if invalid
             };
-            return _StaffRepo.GetStaff(id);  // retuns staff
+           
+            StaffModel staff = _StaffRepo.GetStaff(id);
+
+            return CreatedAtAction(nameof(GetStaff), new { id = staff.StaffId }, staff);   // retuns staff
        
         }
 
@@ -125,7 +134,7 @@ namespace Could_System_dev_ops.Controllers
         {
             if (id <= 0) // checks valid id 
             {
-                return NotFound();// not found if invalid
+                return BadRequest();// not found if invalid
             }
             return _StaffRepo.GetStaffPermissions(id); // retruns staff permissons
         }//end
@@ -136,11 +145,11 @@ namespace Could_System_dev_ops.Controllers
         {
             if(Permissons == null)// checks permissons isnt null
             {
-                return NotFound();
+                return BadRequest();
             }
             if(Permissons.StaffId <= 0)// checks valid id
             {
-                return NotFound();
+                return BadRequest();
             }
             return _StaffRepo.EditPermissions(Permissons); // returns edited data
         }
@@ -152,7 +161,7 @@ namespace Could_System_dev_ops.Controllers
 
             if (user == null) // checks data is not null
             {
-                return NotFound();// not found if user is null
+                return BadRequest();// not found if user is null
             }
             await _userRepositry.Edituser(user);// calls user
             return user; // returns ediited data

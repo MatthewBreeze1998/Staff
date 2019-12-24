@@ -12,7 +12,7 @@ namespace Could_System_dev_ops.Repo
        
         StaffModel CreateStaff(StaffModel staff);
         
-        StaffModel GetStaff(int id);
+        StaffModel GetStaff(int? id);
 
         StaffModel EditStaff(StaffModel staff);
 
