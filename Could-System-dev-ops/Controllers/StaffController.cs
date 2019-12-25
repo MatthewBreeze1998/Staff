@@ -31,10 +31,14 @@ namespace Could_System_dev_ops.Controllers
             {
                 return BadRequest();
             }
+            
+            
+            int newId = _StaffRepo.GetAllStaff().Max(x => x.StaffId + 1);// gats max id and adds one
+            staff.StaffId = newId; // sets new id
+           
+            _StaffRepo.CreateStaff(staff);
 
-         StaffModel newStaff  = _StaffRepo.CreateStaff(staff);
-
-            return CreatedAtAction(nameof(GetStaff), new { id = staff.StaffId }, newStaff);
+            return CreatedAtAction(nameof(GetStaff), new { id = staff.StaffId }, staff);
                 
                // return created staff
         }
