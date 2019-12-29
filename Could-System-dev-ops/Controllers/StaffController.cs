@@ -31,8 +31,7 @@ namespace Could_System_dev_ops.Controllers
             {
                 return BadRequest();
             }
-            
-            
+
             int newId = _StaffRepo.GetAllStaff().Max(x => x.StaffId + 1);// gats max id and adds one
             staff.StaffId = newId; // sets new id
            
@@ -42,7 +41,7 @@ namespace Could_System_dev_ops.Controllers
                 
                // return created staff
         }
-        [Route("DeleteStaff/{id}")]//rotute
+        [Route("DeleteStaff")]//rotute
         [HttpPost]
         public ActionResult<StaffModel> DeleteStaff(StaffModel staff)
         {
@@ -55,10 +54,12 @@ namespace Could_System_dev_ops.Controllers
             {
                 return BadRequest();// return not found if null 
             }
-            return _StaffRepo.DeleteStaff(staff); // calls api and returns deleted data
+            // calls api and returns deleted data
+            return _StaffRepo.DeleteStaff(staff);
+
         }
 
-        [Route("editstaff/{id}")]
+        [Route("editstaff")]
         [HttpPost]
         public ActionResult<StaffModel> EditStaff(StaffModel staff)
         {
@@ -71,8 +72,8 @@ namespace Could_System_dev_ops.Controllers
                 return BadRequest();// return not found if null 
             }
             _StaffRepo.EditStaff(staff);// returns edited user
-            
-            return CreatedAtAction(nameof(GetStaff), new { id = staff.StaffId }, staff);// returns edited user
+
+            return staff;// returns edited user
         }
 
         [Route("GetAllStaff")]// Route
@@ -90,12 +91,18 @@ namespace Could_System_dev_ops.Controllers
             if (id == null)// check to valid id
             {
                 return BadRequest(); // not found if invalid
-            };
+            }
            
             StaffModel staff = _StaffRepo.GetStaff(id);
 
-            return CreatedAtAction(nameof(GetStaff), new { id = staff.StaffId }, staff);   // retuns staff
-       
+            if(staff == null)
+            {
+                return NotFound();
+            }
+
+            return staff;   // retuns staff
+
+
         }
 
         [Route("createstaffpermissions")]

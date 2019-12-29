@@ -28,9 +28,9 @@ namespace ControllerTest
         {
             _staffModelsList = new List<StaffModel>()
             {
-                new StaffModel() {StaffId = 1,FirstName = "cameron", LastName = "charlton", ContactNumebr = 198237129, Email = "cam_puto@hotmail.co.uk", PayRoll = 23123123},
-                new StaffModel() {StaffId = 2,FirstName = "sam", LastName = "el", ContactNumebr = 192342123429, Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243},
-                new StaffModel() {StaffId = 3,FirstName = "josh", LastName = "white", ContactNumebr = 11212213129, Email = "josh_white@hotmail.co.uk", PayRoll =12533123}
+                new StaffModel() {StaffId = 1,FirstName = "cameron", LastName = "charlton", ContactNumber = 198237129, Email = "cam_puto@hotmail.co.uk", PayRoll = 23123123},
+                new StaffModel() {StaffId = 2,FirstName = "sam", LastName = "el", ContactNumber = 192342123429, Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243},
+                new StaffModel() {StaffId = 3,FirstName = "josh", LastName = "white", ContactNumber = 11212213129, Email = "josh_white@hotmail.co.uk", PayRoll =12533123}
             };// test Data
 
 
@@ -53,7 +53,7 @@ namespace ControllerTest
 
             Assert.IsNotNull(_staffRepo);
             Assert.IsNotNull(_staffController);
-            StaffModel Staff = new StaffModel() { StaffId = 4, FirstName = "josh", LastName = "white", ContactNumebr = 11212213129, Email = "josh_white@hotmail.co.uk", PayRoll = 12533123 };
+            StaffModel Staff = new StaffModel() { StaffId = 4, FirstName = "josh", LastName = "white", ContactNumber = 11212213129, Email = "josh_white@hotmail.co.uk", PayRoll = 12533123 };
             Assert.IsNotNull(Staff);
 
             int currentMaxId = _staffController.GetStaffs().Max(x => x.StaffId);
@@ -109,26 +109,18 @@ namespace ControllerTest
 
             Assert.IsNotNull(_staffRepo);
             Assert.IsNotNull(_staffController);
-            StaffModel UpdateStaff = new StaffModel() { StaffId = 2, FirstName = "sam", LastName = "el", ContactNumebr = 192342123429, Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243 };
+            StaffModel UpdateStaff = new StaffModel() { StaffId = 2, FirstName = "sam", LastName = "el", ContactNumber = 192342123429, Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243 };
             Assert.IsNotNull(UpdateStaff);
 
-            UpdateStaff.LastName = "fgt";
+            UpdateStaff.LastName = "onopp";
 
             ActionResult<StaffModel> result = _staffController.EditStaff(UpdateStaff);
             Assert.IsNotNull(result);
 
-            ActionResult StaffResult = result.Result;
-            Assert.AreEqual(StaffResult.GetType(), typeof(CreatedAtActionResult));
+            StaffModel updatedModel = result.Value;
+            Assert.IsNotNull(result.Value);
 
-            CreatedAtActionResult UpdatedStaffResult = (CreatedAtActionResult)StaffResult;
-            Assert.IsNotNull(UpdatedStaffResult);
-            Assert.AreEqual(UpdatedStaffResult.Value.GetType(), typeof(StaffModel));
-
-            StaffModel StaffValue = (StaffModel)UpdatedStaffResult.Value;
-            Assert.IsNotNull(StaffValue);
-
-            Assert.AreEqual(UpdateStaff.FirstName, StaffValue.FirstName);
-
+            Assert.AreEqual(updatedModel.LastName, UpdateStaff.LastName);
         }
         [Test]
         public void EditStaff_invalid_Object()
@@ -149,16 +141,19 @@ namespace ControllerTest
         {
             Assert.IsNotNull(_staffRepo);
             Assert.IsNotNull(_staffController);
-            StaffModel DeleteStaff = new StaffModel() { StaffId = 2, FirstName = "sam", LastName = "el", ContactNumebr = 192342123429, Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243 };
+            StaffModel DeleteStaff = new StaffModel() { StaffId = 2, FirstName = "sam", LastName = "el", ContactNumber = 192342123429, Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243 };
             Assert.IsNotNull(DeleteStaff);
 
-            StaffModel staff = _staffController.DeleteStaff(DeleteStaff).Value;
-
-            ActionResult<StaffModel> result = _staffController.GetStaff(staff.StaffId);
+            ActionResult<StaffModel> staff = _staffController.DeleteStaff(DeleteStaff).Value;
+            Assert.IsNotNull(staff);
+            Assert.IsNotNull(staff.Value);
+            
+            ActionResult<StaffModel> result = _staffController.GetStaff(staff.Value.StaffId);
+            
             Assert.IsNotNull(result);
-
+         
             ActionResult StaffResult = result.Result;
-            Assert.AreEqual(StaffResult.GetType(), typeof(BadRequestResult));
+            Assert.AreEqual(StaffResult.GetType(), typeof(NotFoundResult));
 
         }
         [Test]

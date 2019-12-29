@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Could_System_dev_ops.Models
 {
     public class StaffModel
-    {
+    { 
       
         public int StaffId { get; set; }
         
@@ -16,10 +16,8 @@ namespace Could_System_dev_ops.Models
 
         public String Email { get; set; }
 
-        public double ContactNumebr { get; set; }
+        public double ContactNumber { get; set; }
 
         public double PayRoll { get; set; }
-
-
     }
 }
