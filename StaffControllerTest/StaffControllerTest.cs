@@ -149,7 +149,6 @@ namespace ControllerTest
             Assert.IsNotNull(staff.Value);
             
             ActionResult<StaffModel> result = _staffController.GetStaff(staff.Value.StaffId);
-            
             Assert.IsNotNull(result);
          
             ActionResult StaffResult = result.Result;
