@@ -91,18 +91,15 @@ namespace Could_System_dev_ops.Controllers
             if (id == null)// check to valid id
             {
                 return BadRequest(); // not found if invalid
-            }
+            }    
            
-            StaffModel staff = _StaffRepo.GetStaff(id);
-
+            StaffModel staff = _StaffRepo.GetStaff(id);// creates new model staff from the found result of getstaff
+       
             if(staff == null)
             {
                 return NotFound();
-            }
-
-            return staff;   // retuns staff
-
-
+            }// checks staff is valid staff
+            return staff;  // retuns staff
         }
 
         [Route("createstaffpermissions")]
