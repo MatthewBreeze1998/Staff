@@ -50,129 +50,118 @@ namespace ControllerTest
         [Test]
         public void CreateProduct_valid_object()
         {
+            Assert.IsNotNull(_staffRepo);// not null repo
+            Assert.IsNotNull(_staffController);// not null controller
+            StaffModel Staff = new StaffModel() { StaffId = 4, FirstName = "josh", LastName = "white", ContactNumber = 11212213129, Email = "josh_white@hotmail.co.uk", PayRoll = 12533123 };// new valid staff model
+            Assert.IsNotNull(Staff);// staff isnt null
 
-            Assert.IsNotNull(_staffRepo);
-            Assert.IsNotNull(_staffController);
-            StaffModel Staff = new StaffModel() { StaffId = 4, FirstName = "josh", LastName = "white", ContactNumber = 11212213129, Email = "josh_white@hotmail.co.uk", PayRoll = 12533123 };
-            Assert.IsNotNull(Staff);
+            int currentMaxId = _staffController.GetStaffs().Max(x => x.StaffId); // get the max id 
+            Assert.GreaterOrEqual(currentMaxId, 1);// adds 1 to max id 
 
-            int currentMaxId = _staffController.GetStaffs().Max(x => x.StaffId);
-            Assert.GreaterOrEqual(currentMaxId, 1);
-
-            ActionResult<StaffModel> result = _staffController.CreateStaff(Staff);
-            Assert.IsNotNull(result);
+            ActionResult<StaffModel> result = _staffController.CreateStaff(Staff);// result is the return of create staff function 
+            Assert.IsNotNull(result);// checks is not null
 
 
-            ActionResult staffResult = result.Result;
-            Assert.AreEqual(staffResult.GetType(), typeof(CreatedAtActionResult));
+            ActionResult staffResult = result.Result;// staff result is the result of result
+            Assert.AreEqual(staffResult.GetType(), typeof(CreatedAtActionResult));// checks staff result us of type create at action
 
-            CreatedAtActionResult createdStaffResult = (CreatedAtActionResult)staffResult;
-            Assert.IsNotNull(createdStaffResult);
-            Assert.AreEqual(createdStaffResult.Value.GetType(), typeof(StaffModel));
+            CreatedAtActionResult createdStaffResult = (CreatedAtActionResult)staffResult;// makes a new creat at action called createdstaffresult
+            Assert.IsNotNull(createdStaffResult);// chekcs nit null
+            Assert.AreEqual(createdStaffResult.Value.GetType(), typeof(StaffModel));// checks createdStaffResult.Value is of type staff model
 
-            StaffModel UserValue = (StaffModel)createdStaffResult.Value;
-            Assert.IsNotNull(UserValue);
+            StaffModel UserValue = (StaffModel)createdStaffResult.Value;// cretes new staff model and sets it ot createdStaffResult.Value
+            Assert.IsNotNull(UserValue);// checks not null
 
-            Assert.AreEqual(currentMaxId + 1, UserValue.StaffId);
-            Assert.AreEqual(Staff.FirstName, UserValue.FirstName);
-            Assert.AreEqual(Staff.LastName, UserValue.LastName);
-            Assert.AreEqual(Staff.Email, UserValue.Email);
-            Assert.AreEqual(Staff.PayRoll, UserValue.PayRoll);
+            Assert.AreEqual(currentMaxId + 1, UserValue.StaffId);//checks are equal
+            Assert.AreEqual(Staff.FirstName, UserValue.FirstName);//checks are equal
+            Assert.AreEqual(Staff.LastName, UserValue.LastName);//checks are equal
+            Assert.AreEqual(Staff.Email, UserValue.Email);//checks are equal
+            Assert.AreEqual(Staff.PayRoll, UserValue.PayRoll);//checks are equal
 
         }
         [Test]
         public void CreateProduct_invalid_Shouldobject()
         {
+            Assert.IsNotNull(_staffRepo);// not null repo
+            Assert.IsNotNull(_staffController);// not null controller
+            StaffModel Staff = null;// null staff model
+            Assert.IsNull(Staff);// checks null
 
-            Assert.IsNotNull(_staffRepo);
-            Assert.IsNotNull(_staffController);
-            StaffModel Staff = null;
-            Assert.IsNull(Staff);
+            int currentMaxId = _staffController.GetStaffs().Max(x => x.StaffId);// gets max id
+            Assert.GreaterOrEqual(currentMaxId, 1);// adds one to max id 
 
-            int currentMaxId = _staffController.GetStaffs().Max(x => x.StaffId);
-            Assert.GreaterOrEqual(currentMaxId, 1);
-
-            ActionResult<StaffModel> result = _staffController.CreateStaff(Staff);
-            Assert.IsNotNull(result);
-
-
-            ActionResult staffResult = result.Result;
-            Assert.AreEqual(staffResult.GetType(), typeof(BadRequestResult));
+            ActionResult<StaffModel> result = _staffController.CreateStaff(Staff);// calls create staff 
+            Assert.IsNotNull(result);// checks result is not null
 
 
-
+            ActionResult staffResult = result.Result;//staffResult is result.result
+            Assert.AreEqual(staffResult.GetType(), typeof(BadRequestResult));// checks staffResult is of bad request
         }
 
         [Test]
         public void EditStaff_valid_Object()
         {
+            Assert.IsNotNull(_staffRepo);// repo not null
+            Assert.IsNotNull(_staffController);// controller nit null
+            StaffModel UpdateStaff = new StaffModel() { StaffId = 2, FirstName = "sam", LastName = "el", ContactNumber = 192342123429, Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243 };// current staff model
+            Assert.IsNotNull(UpdateStaff);// staff model not null
 
-            Assert.IsNotNull(_staffRepo);
-            Assert.IsNotNull(_staffController);
-            StaffModel UpdateStaff = new StaffModel() { StaffId = 2, FirstName = "sam", LastName = "el", ContactNumber = 192342123429, Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243 };
-            Assert.IsNotNull(UpdateStaff);
+            UpdateStaff.LastName = "onopp";// eddit las name
 
-            UpdateStaff.LastName = "onopp";
+            ActionResult<StaffModel> result = _staffController.EditStaff(UpdateStaff);// calls edit function
+            Assert.IsNotNull(result);// result isnt null
 
-            ActionResult<StaffModel> result = _staffController.EditStaff(UpdateStaff);
-            Assert.IsNotNull(result);
+            StaffModel updatedModel = result.Value;// updatedModel id the result of result
+            Assert.IsNotNull(result.Value);// checks nit null
 
-            StaffModel updatedModel = result.Value;
-            Assert.IsNotNull(result.Value);
-
-            Assert.AreEqual(updatedModel.LastName, UpdateStaff.LastName);
+            Assert.AreEqual(updatedModel.LastName, UpdateStaff.LastName);// checks it has been eddit correctly
         }
         [Test]
         public void EditStaff_invalid_Object()
         {
-            Assert.IsNotNull(_staffRepo);
-            Assert.IsNotNull(_staffController);
-            StaffModel UpdateStaff = null;
-            Assert.IsNull(UpdateStaff);
+            Assert.IsNotNull(_staffRepo);// repo not null
+            Assert.IsNotNull(_staffController);// controller nit null
+            StaffModel UpdateStaff = null;// null model 
+            Assert.IsNull(UpdateStaff);// checks is null
 
-            ActionResult<StaffModel> result = _staffController.EditStaff(UpdateStaff);
-            Assert.IsNotNull(result);
+            ActionResult<StaffModel> result = _staffController.EditStaff(UpdateStaff);// calls edit with null model passed through
+            Assert.IsNotNull(result);// checks the result is not null
 
-            ActionResult StaffResult = result.Result;
-            Assert.AreEqual(StaffResult.GetType(), typeof(BadRequestResult));
+            ActionResult StaffResult = result.Result;// StaffResult is the result.result
+            Assert.AreEqual(StaffResult.GetType(), typeof(BadRequestResult));// checks StaffResult is of type bad reqequest
         }
         [Test]
         public void DeleteStaff_valid_shouldObject()
         {
-            Assert.IsNotNull(_staffRepo);
-            Assert.IsNotNull(_staffController);
-            StaffModel DeleteStaff = new StaffModel() { StaffId = 2, FirstName = "sam", LastName = "el", ContactNumber = 192342123429, Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243 };
-            Assert.IsNotNull(DeleteStaff);
+            Assert.IsNotNull(_staffRepo);// repo not null
+            Assert.IsNotNull(_staffController);// controller nit null
+            StaffModel DeleteStaff = new StaffModel() { StaffId = 2, FirstName = "sam", LastName = "el", ContactNumber = 192342123429, Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243 };// new staff model
+            Assert.IsNotNull(DeleteStaff);// checks model is not null
 
-            ActionResult<StaffModel> staff = _staffController.DeleteStaff(DeleteStaff).Value;
-            Assert.IsNotNull(staff);
-            Assert.IsNotNull(staff.Value);
-            
-            ActionResult<StaffModel> result = _staffController.GetStaff(staff.Value.StaffId);
-            Assert.IsNotNull(result);
+            ActionResult<StaffModel> staff = _staffController.DeleteStaff(DeleteStaff).Value;// staff is the value of the delete function
+            Assert.IsNotNull(staff);// checks staff is not null
+            Assert.IsNotNull(staff.Value);// checks staff.Value is not null
+
+            ActionResult<StaffModel> result = _staffController.GetStaff(staff.Value.StaffId);//result is the return of get staff
+            Assert.IsNotNull(result);// result is not null
          
-            ActionResult StaffResult = result.Result;
-            Assert.AreEqual(StaffResult.GetType(), typeof(NotFoundResult));
-
+            ActionResult StaffResult = result.Result;// staffresult is result.value
+            Assert.AreEqual(StaffResult.GetType(), typeof(NotFoundResult));// StaffResult is of type bad request 
         }
         [Test]
         public void DeleteStaff_invalid_shouldObject()
         {
-            Assert.IsNotNull(_staffRepo);
-            Assert.IsNotNull(_staffController);
-            StaffModel DeleteStaff = null;
-            Assert.IsNull(DeleteStaff);
+            Assert.IsNotNull(_staffRepo);// repo not null
+            Assert.IsNotNull(_staffController);// controller nit null
+            StaffModel DeleteStaff = null;// null users
+            Assert.IsNull(DeleteStaff);// checks is null
 
-            ActionResult<StaffModel> result = _staffController.DeleteStaff(DeleteStaff);
-            Assert.IsNotNull(result);
+            ActionResult<StaffModel> result = _staffController.DeleteStaff(DeleteStaff);// calls delete fuction with null model 
+            Assert.IsNotNull(result);// result is not null
 
-            ActionResult StaffResult = result.Result;
-            Assert.AreEqual(StaffResult.GetType(), typeof(BadRequestResult));
+            ActionResult StaffResult = result.Result;// StaffResult is result of result
+            Assert.AreEqual(StaffResult.GetType(), typeof(BadRequestResult));// StaffResult is of type bad request
 
         }
-
-
     }
-
-
 }
