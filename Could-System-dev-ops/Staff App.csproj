@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-    <RootNamespace>Cloud_System_dev_ops</RootNamespace>
+    <RootNamespace>Cloud-System-dev-ops</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
