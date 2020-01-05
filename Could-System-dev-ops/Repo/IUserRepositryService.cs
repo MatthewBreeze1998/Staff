@@ -14,7 +14,7 @@ namespace Cloud_System_dev_ops.Repo
 
         public LocalHostUserService(HttpClient client)
         {
-            client.BaseAddress = new Uri("http://localhost:57376");
+            client.BaseAddress = new Uri("https://thamco-users.azurewebsites.net");
             client.Timeout = TimeSpan.FromSeconds(5);
             client.DefaultRequestHeaders.Add("Accept", "application/json");
         }
