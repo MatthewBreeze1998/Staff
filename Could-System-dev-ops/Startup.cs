@@ -71,7 +71,7 @@ namespace Cloud_System_dev_ops
             .WaitAndRetryAsync(3, SqlServerretryingExecutionStrategy => TimeSpan.FromSeconds(Math.Pow(2, SqlServerretryingExecutionStrategy))))
             .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
-
+            services.AddHttpContextAccessor();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<StaffDataBaseContext>(options =>
             {
