@@ -13,7 +13,6 @@ namespace Cloud_System_dev_ops.Controllers
 {
     [Route("api/Staff")]// contoller Route
     [ApiController]
-    [Authorize]
     public class StaffController : Controller
     {
 
@@ -23,6 +22,7 @@ namespace Cloud_System_dev_ops.Controllers
         {
             _StaffRepo = staff;
         }
+        [Authorize(Policy = "Manager")]
         [Route("CreateStaff")]//Route
         [HttpPost]
         public  ActionResult<StaffModel> CreateStaff(StaffModel staff)
@@ -41,6 +41,7 @@ namespace Cloud_System_dev_ops.Controllers
                 
                // return created staff
         }
+        [Authorize(Policy = "Manager")]
         [Route("DeleteStaff")]//rotute
         [HttpPost]
         public ActionResult<StaffModel> DeleteStaff(StaffModel staff)
@@ -58,7 +59,7 @@ namespace Cloud_System_dev_ops.Controllers
             return _StaffRepo.DeleteStaff(staff);
 
         }
-
+        [Authorize(Policy = "Manager")]
         [Route("editstaff")]
         [HttpPost]
         public ActionResult<StaffModel> EditStaff(StaffModel staff)
@@ -75,14 +76,14 @@ namespace Cloud_System_dev_ops.Controllers
 
             return staff;// returns edited user
         }
-
+        [Authorize(Policy = "Staffpol")]
         [Route("GetAllStaff")]// Route
         [HttpGet]
         public IEnumerable<StaffModel> GetStaffs()
         {
             return _StaffRepo.GetAllStaff();// calls and return all staff as IEnumerbale
         }// Get All staff method
-
+        [Authorize(Policy = "Staffpol")]
         [Route("GetStaff/{id}")]//Route
         [HttpGet]
         public ActionResult<StaffModel> GetStaff(int? id)
@@ -101,7 +102,7 @@ namespace Cloud_System_dev_ops.Controllers
             }// checks staff is valid staff
             return staff;  // retuns staff
         }
-
+        [Authorize(Policy = "Manager")]
         [Route("createstaffpermissions")]
         [HttpPost]
         public ActionResult<StaffPermissonsModel> CreateStaffPermissions(StaffPermissonsModel staffPermissons)
@@ -116,7 +117,7 @@ namespace Cloud_System_dev_ops.Controllers
             }
             return _StaffRepo.CreateStaffPermissons(staffPermissons);// returns new staffpermissons
         }
-
+        [Authorize(Policy = "Manager")]
         [Route("DeleteStaffStaffPermissons")]//rotute
         [HttpPost]
         public ActionResult<StaffPermissonsModel> DeleteStaffPermissons(StaffPermissonsModel staffPermissons)
@@ -132,10 +133,7 @@ namespace Cloud_System_dev_ops.Controllers
             }
             return _StaffRepo.DeleteStaffPermissions(staffPermissons); // calls api and returns deleted data
         }
-
-       
-
-
+        [Authorize(Policy = "Staffpol")]
         [Route("StaffPermissions")] // route
         [HttpPost]
         public ActionResult<StaffPermissonsModel> GetPermissons(int id)
@@ -146,7 +144,7 @@ namespace Cloud_System_dev_ops.Controllers
             }
             return _StaffRepo.GetStaffPermissions(id); // retruns staff permissons
         }//end
-
+        [Authorize(Policy = "Manager")]
         [Route("EditPermissons")]
         [HttpPost]
         public async Task<ActionResult<StaffPermissonsModel>> EditPermissons(StaffPermissonsModel Permissons)
@@ -161,7 +159,7 @@ namespace Cloud_System_dev_ops.Controllers
             }
             return _StaffRepo.EditPermissions(Permissons); // returns edited data
         }
-
+        [Authorize(Policy = "Staffpol")]
         [Route("purchaseAbility/{id}")]//route
         [HttpPost]
         public async Task<ActionResult<UserMetaData>> SetPurchaseAbilty(UserMetaData user)
@@ -174,8 +172,5 @@ namespace Cloud_System_dev_ops.Controllers
             await _userRepositry.Edituser(user);// calls user
             return user; // returns ediited data
         }
-        
-        
-
     }
 }
