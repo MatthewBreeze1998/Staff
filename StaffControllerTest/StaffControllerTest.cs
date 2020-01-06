@@ -28,9 +28,9 @@ namespace ControllerTest
         {
             _staffModelsList = new List<StaffModel>()
             {
-                new StaffModel() {StaffId = 1,FirstName = "cameron", LastName = "charlton", ContactNumber = 198237129, Email = "cam_puto@hotmail.co.uk", PayRoll = 23123123},
-                new StaffModel() {StaffId = 2,FirstName = "sam", LastName = "el", ContactNumber = 192342123429, Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243},
-                new StaffModel() {StaffId = 3,FirstName = "josh", LastName = "white", ContactNumber = 11212213129, Email = "josh_white@hotmail.co.uk", PayRoll =12533123}
+                new StaffModel() {StaffId = 1,FirstName = "cameron", LastName = "charlton", ContactNumber = "198237129", Email = "cam_puto@hotmail.co.uk", PayRoll = 23123123},
+                new StaffModel() {StaffId = 2,FirstName = "sam", LastName = "el", ContactNumber = "192342123429", Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243},
+                new StaffModel() {StaffId = 3,FirstName = "josh", LastName = "white", ContactNumber = "11212213129", Email = "josh_white@hotmail.co.uk", PayRoll =12533123}
             };// test Data
 
 
@@ -42,8 +42,9 @@ namespace ControllerTest
             };// test Data
 
             _staffRepo = new FakeStaffRepo();
-            _staffController = new StaffController(_staffRepo);
             _userRepo = new SuccessIUserService();
+            _staffController = new StaffController(_staffRepo, _userRepo);
+            
 
         }
 
@@ -52,7 +53,7 @@ namespace ControllerTest
         {
             Assert.IsNotNull(_staffRepo);// not null repo
             Assert.IsNotNull(_staffController);// not null controller
-            StaffModel Staff = new StaffModel() { StaffId = 4, FirstName = "josh", LastName = "white", ContactNumber = 11212213129, Email = "josh_white@hotmail.co.uk", PayRoll = 12533123 };// new valid staff model
+            StaffModel Staff = new StaffModel() { StaffId = 4, FirstName = "josh", LastName = "white", ContactNumber = "11212213129", Email = "josh_white@hotmail.co.uk", PayRoll = 12533123 };// new valid staff model
             Assert.IsNotNull(Staff);// staff isnt null
 
             int currentMaxId = _staffController.GetStaffs().Max(x => x.StaffId); // get the max id 
@@ -103,7 +104,7 @@ namespace ControllerTest
         {
             Assert.IsNotNull(_staffRepo);// repo not null
             Assert.IsNotNull(_staffController);// controller nit null
-            StaffModel UpdateStaff = new StaffModel() { StaffId = 2, FirstName = "sam", LastName = "el", ContactNumber = 192342123429, Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243 };// current staff model
+            StaffModel UpdateStaff = new StaffModel() { StaffId = 2, FirstName = "sam", LastName = "el", ContactNumber = "192342123429", Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243 };// current staff model
             Assert.IsNotNull(UpdateStaff);// staff model not null
 
             UpdateStaff.LastName = "onopp";// eddit las name
@@ -135,7 +136,7 @@ namespace ControllerTest
         {
             Assert.IsNotNull(_staffRepo);// repo not null
             Assert.IsNotNull(_staffController);// controller nit null
-            StaffModel DeleteStaff = new StaffModel() { StaffId = 2, FirstName = "sam", LastName = "el", ContactNumber = 192342123429, Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243 };// new staff model
+            StaffModel DeleteStaff = new StaffModel() { StaffId = 2, FirstName = "sam", LastName = "el", ContactNumber = "192342123429", Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243 };// new staff model
             Assert.IsNotNull(DeleteStaff);// checks model is not null
 
             ActionResult<StaffModel> staff = _staffController.DeleteStaff(DeleteStaff).Value;// staff is the value of the delete function
