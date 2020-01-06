@@ -13,6 +13,5 @@ namespace Cloud_System_dev_ops.Models
         public String Email { get; set; }
         public bool isActive { get; set; }
         public bool PurchaseAbility { get; set; }
-
     }
 }

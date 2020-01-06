@@ -18,9 +18,10 @@ namespace Cloud_System_dev_ops.Controllers
 
         private IStaffRepositry _StaffRepo; // Staff Interface
         private IUserRepositry _userRepositry; // User Interface
-        public StaffController(IStaffRepositry staff)
+        public StaffController(IStaffRepositry staff, IUserRepositry user)
         {
             _StaffRepo = staff;
+            _userRepositry = user;
         }
         [Authorize(Policy = "Manager")]
         [Route("CreateStaff")]//Route
@@ -76,9 +77,10 @@ namespace Cloud_System_dev_ops.Controllers
 
             return staff;// returns edited user
         }
-        [Authorize(Policy = "Staffpol")]
+        
         [Route("GetAllStaff")]// Route
         [HttpGet]
+        [Authorize(Policy = "Staffpol")]
         public IEnumerable<StaffModel> GetStaffs()
         {
             return _StaffRepo.GetAllStaff();// calls and return all staff as IEnumerbale
@@ -147,21 +149,22 @@ namespace Cloud_System_dev_ops.Controllers
         [Authorize(Policy = "Manager")]
         [Route("EditPermissons")]
         [HttpPost]
-        public async Task<ActionResult<StaffPermissonsModel>> EditPermissons(StaffPermissonsModel Permissons)
+        public ActionResult<StaffPermissonsModel> EditPermissons(StaffPermissonsModel Permissons)
         {
-            if(Permissons == null)// checks permissons isnt null
+            if (Permissons == null)// checks permissons isnt null
             {
                 return BadRequest();
             }
-            if(Permissons.StaffId <= 0)// checks valid id
+            if (Permissons.StaffId <= 0)// checks valid id
             {
                 return BadRequest();
             }
             return _StaffRepo.EditPermissions(Permissons); // returns edited data
         }
-        [Authorize(Policy = "Staffpol")]
-        [Route("purchaseAbility/{id}")]//route
+        
+        [Route("purchaseAbility")]//route
         [HttpPost]
+        [Authorize(Policy = "Staffpol")]
         public async Task<ActionResult<UserMetaData>> SetPurchaseAbilty(UserMetaData user)
         {
 
@@ -169,6 +172,7 @@ namespace Cloud_System_dev_ops.Controllers
             {
                 return BadRequest();// not found if user is null
             }
+            user.PurchaseAbility = !user.PurchaseAbility;
             await _userRepositry.Edituser(user);// calls user
             return user; // returns ediited data
         }

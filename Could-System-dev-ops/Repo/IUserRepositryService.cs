@@ -8,15 +8,13 @@ using System.Threading.Tasks;
 
 namespace Cloud_System_dev_ops.Repo
 {
-    public class LocalHostUserService : IUserRepositry
+    public class HttpUserService : IUserRepositry
     {
         private readonly HttpClient _Client;
 
-        public LocalHostUserService(HttpClient client)
+        public HttpUserService(HttpClient Client)
         {
-            client.BaseAddress = new Uri("https://thamco-users.azurewebsites.net");
-            client.Timeout = TimeSpan.FromSeconds(5);
-            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            _Client = Client;
         }
 
         public async Task<UserMetaData> Edituser(UserMetaData User)
