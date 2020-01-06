@@ -20,9 +20,9 @@ namespace Cloud_System_dev_ops.Repo
         {
             _staffModelsList = new List<StaffModel>()
             {
-                new StaffModel() {StaffId = 1,FirstName = "cameron", LastName = "charlton", ContactNumber = 198237129, Email = "cam_puto@hotmail.co.uk", PayRoll = 23123123},
-                new StaffModel() {StaffId = 2,FirstName = "sam", LastName = "el", ContactNumber = 192342123429, Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243},
-                new StaffModel() {StaffId = 3,FirstName = "josh", LastName = "white", ContactNumber = 11212213129, Email = "josh_white@hotmail.co.uk", PayRoll =12533123}
+                new StaffModel() {StaffId = 1,FirstName = "cameron", LastName = "charlton", ContactNumber = "198237129", Email = "cam_puto@hotmail.co.uk", PayRoll = 23123123},
+                new StaffModel() {StaffId = 2,FirstName = "sam", LastName = "el", ContactNumber = "192342123429", Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243},
+                new StaffModel() {StaffId = 3,FirstName = "josh", LastName = "white", ContactNumber = "11212213129", Email = "josh_white@hotmail.co.uk", PayRoll =12533123}
             };// test Data
 
 

@@ -136,8 +136,8 @@ namespace Cloud_System_dev_ops.Controllers
             return _StaffRepo.DeleteStaffPermissions(staffPermissons); // calls api and returns deleted data
         }
         [Authorize(Policy = "Staffpol")]
-        [Route("StaffPermissions")] // route
-        [HttpPost]
+        [Route("StaffPermissions/{id}")] // route
+        [HttpGet]
         public ActionResult<StaffPermissonsModel> GetPermissons(int id)
         {
             if (id <= 0) // checks valid id 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,7 +17,8 @@ namespace Cloud_System_dev_ops.Models
 
         public String Email { get; set; }
 
-        public double ContactNumber { get; set; }
+        [DataType(DataType.PhoneNumber)]
+        public string ContactNumber { get; set; }
 
         public double PayRoll { get; set; }
     }
