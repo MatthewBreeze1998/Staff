@@ -24,36 +24,23 @@ namespace Cloud_System_dev_ops
             Configuration = configuration;
             CurrentEnvironment = env;
         }
+        IUserRepositry User { get; set; }
 
         public IConfiguration Configuration { get; }
         public IHostingEnvironment CurrentEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IUserRepositry user)
         {
-            JwtSecurityTokenHandler.DefaultInboundClaimFilter.Clear();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "https://localhost:44387/";
+                    options.Authority = Configuration.GetSection("UrlConnections")["Auth"];
                     options.Audience = "Api_Link";
                 });
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Manager", builder =>
-                {
-                    builder.RequireClaim("role", "Manager");
-                });
-            });
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Staffpol", builder =>
-                {
-                    builder.RequireClaim("role", "Staff", "Manager");
-                });
-            });
-
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<StaffDataBaseContext>(options =>
             {
