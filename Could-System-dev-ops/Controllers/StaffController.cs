@@ -201,9 +201,11 @@ namespace Cloud_System_dev_ops.Controllers
                 return NotFound();
             }
 
-            StaffModel UpdatedStaf = _StaffRepo.DeleteObject(staff);
+            staff.PermissionModels.Remove(x => x.Permission = Permission.Permission);
+            StaffModel UpdatedStaf = _StaffRepo.UpdateObject(staff);
 
-            if (UpdatedStaf == null)
+
+            if (UpdatedStaf != null)
             {
                 return Conflict();
             }
