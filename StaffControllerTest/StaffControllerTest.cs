@@ -141,13 +141,15 @@ namespace ControllerTest
             StaffModel DeleteStaff = new StaffModel() { StaffId = 2, FirstName = "sam", LastName = "el", ContactNumber = "192342123429", Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243 };// new staff model
             Assert.IsNotNull(DeleteStaff);// checks model is not null
 
-            ActionResult<StaffModel> staff = _staffController.DeleteStaff(DeleteStaff).Value;// staff is the value of the delete function
-            Assert.IsNotNull(staff);// checks staff is not null
-            Assert.IsNotNull(staff.Value);// checks staff.Value is not null
+            ActionResult<StaffModel> getproduct = _staffController.GetStaff(DeleteStaff.StaffId);
+            Assert.IsNotNull(getproduct);// is nit null
 
-            ActionResult<StaffModel> result = _staffController.GetStaff(staff.Value.StaffId);//result is the return of get staff
-            Assert.IsNotNull(result);// result is not null
-         
+            ActionResult<StaffModel> product = _staffController.DeleteStaff(DeleteStaff); // product is the return of DeleteProduct
+            Assert.IsNotNull(product);// product is not null 
+
+            ActionResult<StaffModel> result = _staffController.GetStaff(DeleteStaff.StaffId);// result is result of get product
+            Assert.IsNotNull(result);// is nit null
+
             ActionResult StaffResult = result.Result;// staffresult is result.value
             Assert.AreEqual(StaffResult.GetType(), typeof(NotFoundResult));// StaffResult is of type bad request 
         }
