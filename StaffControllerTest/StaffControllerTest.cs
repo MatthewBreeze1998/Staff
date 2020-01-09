@@ -1,6 +1,7 @@
 using Cloud_System_dev_ops.Controllers;
 using Cloud_System_dev_ops.Models;
 using Cloud_System_dev_ops.Repo;
+using Cloud_System_dev_ops.Services;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -12,11 +13,11 @@ namespace ControllerTest
     public class StaffControllerTest
     {
         private HttpClient _client;
-        private IStaffRepositry _staffRepo;
-        private IUserRepositry _userRepo;
+        private IRepository<StaffModel> _staffRepo;
+        private IUserService _userRepo;
         private StaffController _staffController;
         private List<StaffModel> _staffModelsList;
-        private List<StaffPermissonsModel> _staffPermissonsList;
+        private List<StaffPermissionsModel> _staffPermissonsList;
 
         public StaffControllerTest()
         {
@@ -34,15 +35,16 @@ namespace ControllerTest
             };// test Data
 
 
-            _staffPermissonsList = new List<StaffPermissonsModel>()
+            _staffPermissonsList = new List<StaffPermissionsModel>()
             {
-                new StaffPermissonsModel() {StaffId = 1, ViewStocklevel = true, CanDeleteUser = false, CanHideReview = true, PurchaseRequest = false, ViewOrderList = true, ViewPendingOrders = true, ViewSetReSale= false, ViewUsers = true, AddStaff = false, ApproveStaffPurchase = false, authorisePermissons = false, RemoveStaff = false , SetPurchaseAbility = false},
-                new StaffPermissonsModel() {StaffId = 2, ViewStocklevel = false, CanDeleteUser = false, CanHideReview = true, PurchaseRequest = false, ViewOrderList = false, ViewPendingOrders = false, ViewSetReSale= false, ViewUsers = true, AddStaff = false, ApproveStaffPurchase = false, authorisePermissons = false, RemoveStaff = false , SetPurchaseAbility = false},
-                new StaffPermissonsModel() {StaffId = 3, ViewStocklevel = true, CanDeleteUser = true, CanHideReview = true, PurchaseRequest = true, ViewOrderList = true, ViewPendingOrders = true, ViewSetReSale= true, ViewUsers = true, AddStaff = true, ApproveStaffPurchase = true, authorisePermissons = false, RemoveStaff = false , SetPurchaseAbility = false}
+                new StaffPermissionsModel() {StaffPermissionsId = 1, StaffId = 1, Permission = "viewstocklevel" },
+                new StaffPermissionsModel() {StaffPermissionsId = 2, StaffId = 1, Permission = "candeleteuser" },
+                new StaffPermissionsModel() {StaffPermissionsId = 3,  StaffId = 2, Permission = "canhidereview"},
+                new StaffPermissionsModel() {StaffPermissionsId = 4,  StaffId = 3, Permission = "purchaserequest"},
             };// test Data
 
             _staffRepo = new FakeStaffRepo();
-            _userRepo = new SuccessIUserService();
+            _userRepo = new FakeSuccessUserService();
             _staffController = new StaffController(_staffRepo, _userRepo);
             
 

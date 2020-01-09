@@ -9,9 +9,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Cloud_System_dev_ops.Repo
+namespace Cloud_System_dev_ops.Services 
 {
-    public class HttpUserService : IUserRepositry
+    public class HttpUserService : IUserService
     {
         private readonly HttpClient _Client;
         private IHttpContextAccessor _Context;

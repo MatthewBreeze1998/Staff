@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Cloud_System_dev_ops.Repo
+namespace Cloud_System_dev_ops.Services
 {
-    public class SuccessIUserService : IUserRepositry
+    public class FakeSuccessUserService : IUserService
     {
         public Task<UserMetaData> Edituser(UserMetaData User)
         {

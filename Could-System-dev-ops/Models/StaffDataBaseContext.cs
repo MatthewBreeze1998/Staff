@@ -11,9 +11,11 @@ namespace Cloud_System_dev_ops.Models
 
         public DbSet<StaffModel> Staff { get; set; }
 
+        public DbSet<StaffPermissionsModel> StaffPermissions { get; set; }
+
         public StaffDataBaseContext(DbContextOptions<StaffDataBaseContext> options) : base(options)
         {
-            Database.Migrate();// creates or migrates data if data base has been created 
+            Database.Migrate();
         }
     }
 }

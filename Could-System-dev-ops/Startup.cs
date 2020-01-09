@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Cloud_System_dev_ops.Models;
 using Cloud_System_dev_ops.Repo;
+using Cloud_System_dev_ops.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,7 +27,7 @@ namespace Cloud_System_dev_ops
             Configuration = configuration;
             CurrentEnvironment = env;
         }
-        IUserRepositry User { get; set; }
+        IUserService User { get; set; }
 
         public IConfiguration Configuration { get; }
         public IHostingEnvironment CurrentEnvironment { get; }
@@ -59,7 +60,7 @@ namespace Cloud_System_dev_ops
                     builder.RequireClaim("role", "Staff", "Manager");
                 });
             });
-            services.AddHttpClient<IUserRepositry, HttpUserService>(x =>
+            services.AddHttpClient<IUserService, HttpUserService>(x =>
             {
                 x.BaseAddress = new Uri(Configuration.GetSection("UrlConnections")["Users-Api"]);
                 x.Timeout = TimeSpan.FromSeconds(5);
@@ -78,17 +79,14 @@ namespace Cloud_System_dev_ops
                 String connection = Configuration.GetConnectionString("StaffConnectionString");
                 options.UseSqlServer(connection);
             });
-            services.AddSingleton<IStaffRepositry, FakeStaffRepo>();
-
             if (CurrentEnvironment.IsDevelopment())
             {
-                services.AddSingleton<IStaffRepositry, FakeStaffRepo>();
-                services.AddSingleton<IUserRepositry, SuccessIUserService>();
+                //services.AddSingleton<IRepository<UsersModel>, FakeUserRepo>();
+                services.AddSingleton<IRepository<StaffModel>, EntityFrameWorkStaffRepositry>();
             }
             else
             {
-                services.AddSingleton<IStaffRepositry, FakeStaffRepo>();
-                services.AddHttpClient<IUserRepositry, HttpUserService>();
+                services.AddSingleton<IRepository<StaffModel>, EntityFrameWorkStaffRepositry>();
             }
 
         }

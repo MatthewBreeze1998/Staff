@@ -18,14 +18,14 @@ namespace Cloud_System_dev_ops.Repo
 
         IEnumerable<StaffModel> GetAllStaff();
 
-        StaffPermissonsModel CreateStaffPermissons(StaffPermissonsModel newStaffPermissions);
+        StaffPermissionsModel CreateStaffPermissons(StaffPermissionsModel newStaffPermissions);
 
-        StaffPermissonsModel EditPermissions(StaffPermissonsModel permissonsModel);
+        StaffPermissionsModel EditPermissions(StaffPermissionsModel permissonsModel);
 
-        StaffPermissonsModel DeleteStaffPermissions(StaffPermissonsModel permissonsModel);
+        StaffPermissionsModel DeleteStaffPermissions(StaffPermissionsModel permissonsModel);
 
-        StaffPermissonsModel GetStaffPermissions(int id);
+        StaffPermissionsModel GetStaffPermissions(int id);
 
-        IEnumerable<StaffPermissonsModel> GetAllStaffPermissions();
+        IEnumerable<StaffPermissionsModel> GetAllStaffPermissions();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cloud_System_dev_ops.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cloud_System_dev_ops.Repo
@@ -25,12 +26,12 @@ namespace Cloud_System_dev_ops.Repo
 
             return Object;
         }
-        public IEnumerable<StaffModel> GetObject()
+        public IEnumerable<StaffModel> GetObjects()
         {
-            return _context.Staff;
+            return _context.Staff.Include(x => x.PermissionModels);
         }
 
-        public bool UpdateObject(StaffModel Object, bool Return)
+        public StaffModel UpdateObject(StaffModel Object)
         {
             try
             {
@@ -39,10 +40,27 @@ namespace Cloud_System_dev_ops.Repo
             }
             catch (Exception ex)
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return Object;
         }
+        public StaffModel DeleteObject(StaffModel Object)
+        {
+            try
+            {
+                _context.Staff.Remove(Object);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return Object;
+            }
+
+            return null;
+        }
+
+
+
     }
 }

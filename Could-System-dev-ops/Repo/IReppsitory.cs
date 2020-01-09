@@ -6,13 +6,14 @@ using Cloud_System_dev_ops.Models;
 
 namespace Cloud_System_dev_ops.Repo
 {
-    public interface IRepository<Product>
+    public interface IRepository<T>
     {
-        bool UpdateObject(StaffModel Object, bool Return);
+        T UpdateObject(T Object);
 
+        T CreateObject(T Object);
 
-        StaffModel CreateObject(StaffModel Object);
+        IEnumerable<T> GetObjects();
 
-        IEnumerable<Models.StaffModel> GetObject();
+        T DeleteObject(T Object);
     }
 }
