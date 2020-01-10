@@ -165,7 +165,7 @@ namespace Cloud_System_dev_ops.Controllers
 
             StaffModel staff = _StaffRepo.GetObjects().FirstOrDefault(x => x.StaffId == Permission.StaffId);
 
-            if(staff == null)
+            if(staff == null)// todo ensure staff member dosnt  all ready have permission  
             {
                 return NotFound();
             }
@@ -187,7 +187,7 @@ namespace Cloud_System_dev_ops.Controllers
         [Authorize(Policy = "Manager")]
         [Route("RemovePermissons")]
         [HttpPost]
-        public ActionResult<StaffPermissionsModel> RemovePermissons(StaffPermissionsModel Permission)
+        public ActionResult<StaffModel> RemovePermissons(StaffPermissionsModel Permission)
         {
             if (Permission == null || string.IsNullOrWhiteSpace(Permission.Permission) || Permission.StaffId <= 0 || Permission.StaffPermissionsId <= 0)// checks permissons isnt null
             {
@@ -200,18 +200,23 @@ namespace Cloud_System_dev_ops.Controllers
             {
                 return NotFound();
             }
+            StaffPermissionsModel toremove = staff.PermissionModels.FirstOrDefault(x => x.StaffPermissionsId == Permission.StaffPermissionsId);
 
-            staff.PermissionModels.Remove(x => x.Permission = Permission.Permission);
+            if(toremove == null)
+            {
+                return staff; // to avvoid confusion form staff being null return success full as staff doesnt have permission 
+            }
+            staff.PermissionModels.Remove(toremove);
+            
             StaffModel UpdatedStaf = _StaffRepo.UpdateObject(staff);
 
-
-            if (UpdatedStaf != null)
+            if (UpdatedStaf == null)
             {
                 return Conflict();
             }
 
 
-            return Permission; // returns edited data
+            return staff; // returns edited data
         }
 
         [Route("purchaseAbility")]//route

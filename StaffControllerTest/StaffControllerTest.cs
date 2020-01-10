@@ -168,5 +168,43 @@ namespace ControllerTest
             Assert.AreEqual(StaffResult.GetType(), typeof(BadRequestResult));// StaffResult is of type bad request
 
         }
+        [Test]
+        public void GetUser_valid_shouldObject()
+        {
+            Assert.IsNotNull(_staffRepo);// repo not null
+            Assert.IsNotNull(_staffController);// controller nit null
+            StaffModel Staff = new StaffModel() { StaffId = 2, FirstName = "sam", LastName = "el", ContactNumber = "192342123429", Email = "sma_fecal@hotmail.co.uk", PayRoll = 2325243 };
+            Assert.IsNotNull(Staff);// user is not null
+
+            ActionResult<StaffModel> result = _staffController.GetStaff(Staff.StaffId).Value;// result is the value of the get user controller function 
+            Assert.IsNotNull(result);// result is not null
+            Assert.IsNotNull(result.Value);// result value is not null
+
+            StaffModel StaffResult = result.Value;//  usersResult resut.value 
+            Assert.IsNotNull(StaffResult);// checks not null
+
+            Assert.AreEqual(Staff.StaffId, StaffResult.StaffId);//checks if it matches
+            Assert.AreEqual(Staff.FirstName, StaffResult.FirstName);//checks if it matches
+            Assert.AreEqual(Staff.LastName, StaffResult.LastName);//checks if it matches
+            Assert.AreEqual(Staff.Email, StaffResult.Email);//checks if it matches
+            Assert.AreEqual(Staff.PayRoll, StaffResult.PayRoll);//checks if it matche
+        }
+
+        [Test]
+        public void GetUser_invalid_shouldObject()
+        {
+
+            Assert.IsNotNull(_staffRepo);// repo not null
+            Assert.IsNotNull(_staffController);// controller nit null
+            StaffModel staff = null;// user is null
+            Assert.IsNull(staff);// checks user is null
+
+            ActionResult<StaffModel> result = _staffController.GetStaff(null);// sets result to getuser function
+            Assert.IsNotNull(result);// checks not null
+
+            ActionResult usersResult = result.Result;// sets UserResult to the result of result
+            Assert.AreEqual(usersResult.GetType(), typeof(BadRequestResult));// checks the resut is of type badrequest
+        }
+
     }
 }
