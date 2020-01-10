@@ -205,6 +205,74 @@ namespace ControllerTest
             ActionResult usersResult = result.Result;// sets UserResult to the result of result
             Assert.AreEqual(usersResult.GetType(), typeof(BadRequestResult));// checks the resut is of type badrequest
         }
+        //[Test]
+        //public void AddPermissions_valid_should()
+        //{
+        //    Assert.IsNotNull(_staffRepo);// repo not null
+        //    Assert.IsNotNull(_staffController);// controller nit null
+        //    StaffPermissionsModel permissions = new StaffPermissionsModel { StaffId = 1, Permission = "purchaserequest" };
+        //    Assert.IsNotNull(permissions);// user is not null
+
+        //    ActionResult<StaffPermissionsModel> result = _staffController.AddPermissons(permissions);// result is the value of the get user controller function 
+        //    Assert.IsNotNull(result);// result is not null
+        //    Assert.IsNotNull(result.Value);// result value is not null
+
+        //    StaffPermissionsModel StaffResult = result.Value;//  usersResult resut.value 
+        //    Assert.IsNotNull(StaffResult);// checks not null
+
+        //    Assert.AreEqual(permissions.StaffId, StaffResult.StaffId);//checks if it matches
+        //    Assert.AreEqual(permissions.Permission, StaffResult.Permission);//checks if it matches
+
+            
+
+        //}
+        [Test]
+        public void AddPermissions_invalid_should()
+        {
+            Assert.IsNotNull(_staffRepo);// repo not null
+            Assert.IsNotNull(_staffController);// controller nit null
+            StaffPermissionsModel permissions = null;
+            Assert.IsNull(permissions);// user is not null
+
+            ActionResult<StaffPermissionsModel> result = _staffController.AddPermissons(permissions);// result is the value of the get user controller function 
+            Assert.IsNotNull(result);// result is not null
+
+            ActionResult usersResult = result.Result;// sets UserResult to the result of result
+            Assert.AreEqual(usersResult.GetType(), typeof(BadRequestResult));// checks the resut is of type badrequest
+        }
+
+        //[Test]
+        //public void RemovePermissions_valid_should()
+        //{
+        //    Assert.IsNotNull(_staffRepo);// repo not null
+        //    Assert.IsNotNull(_staffController);// controller nit null
+        //    StaffPermissionsModel permissions = new StaffPermissionsModel { StaffPermissionsId = 1, StaffId = 1, Permission = "viewstocklevel" };
+        //    Assert.IsNotNull(permissions);// user is not null
+
+        //    ActionResult<StaffModel> result = _staffController.RemovePermissons(permissions);// result is the value of the get user controller function 
+        //    Assert.IsNotNull(result);// result is not null
+        //    Assert.IsNotNull(result.Value);// result value is not null
+
+        //    StaffModel StaffResult = result.Value;//  usersResult resut.value 
+        //    Assert.IsNotNull(StaffResult);// checks not null
+
+        //    Assert.AreNotEqual(StaffResult.PermissionModels, permissions);
+
+        //}
+        [Test]
+        public void RemovePermissions_invalid_should()
+        {
+            Assert.IsNotNull(_staffRepo);// repo not null
+            Assert.IsNotNull(_staffController);// controller nit null
+            StaffPermissionsModel permissions = null;
+            Assert.IsNull(permissions);// user is not null
+
+            ActionResult<StaffModel> result = _staffController.RemovePermissons(permissions);// result is the value of the get user controller function 
+            Assert.IsNotNull(result);// result is not null
+
+            ActionResult usersResult = result.Result;// sets UserResult to the result of result
+            Assert.AreEqual(usersResult.GetType(), typeof(BadRequestResult));// checks the resut is of type badrequest
+        }
 
     }
 }

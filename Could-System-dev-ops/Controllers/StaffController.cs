@@ -133,26 +133,8 @@ namespace Cloud_System_dev_ops.Controllers
             }// checks staff is valid staff
             return staff;  // retuns staff
         }
-        
-        [Authorize(Policy = "Staffpol")]
-        [Route("StaffPermissions/{id}")] // route
-        [HttpGet]
-        public ActionResult<IEnumerable<StaffPermissionsModel>> GetPermissons(int id)
-        {
-            if (id <= 0) // checks valid id 
-            {
-                return BadRequest();// not found if invalid
-            }
-            
-            StaffModel liveModel = _StaffRepo.GetObjects().FirstOrDefault(x => x.StaffId == id); 
-            
-            if(liveModel == null)
-            {
-                return NotFound();
-            }
-            
-            return liveModel.PermissionModels.ToList(); 
-        }//end
+
+
         [Authorize(Policy = "Manager")]
         [Route("AddPermissons")]
         [HttpPost]
@@ -170,7 +152,7 @@ namespace Cloud_System_dev_ops.Controllers
                 return NotFound();
             }
             
-            staff.PermissionModels.Add(Permission);
+           staff.PermissionModels.Add(Permission);
             
             StaffModel UpdatedStaff  = _StaffRepo.UpdateObject(staff);
 
