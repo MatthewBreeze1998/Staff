@@ -10,7 +10,7 @@ namespace Cloud_System_dev_ops.Services
     {
         public Task<UserMetaData> Edituser(UserMetaData User)
         {
-            UserMetaData user = null;
+            UserMetaData user = User;
             return Task.FromResult(user);
         }
     }

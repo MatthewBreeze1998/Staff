@@ -152,7 +152,13 @@ namespace Cloud_System_dev_ops.Controllers
                 return NotFound();
             }
             
-           staff.PermissionModels.Add(Permission);
+            if(staff.PermissionModels == null)
+            {
+                staff.PermissionModels = new List<StaffPermissionsModel>();
+            }
+                    
+
+            staff.PermissionModels.Add(Permission);
             
             StaffModel UpdatedStaff  = _StaffRepo.UpdateObject(staff);
 
@@ -178,7 +184,7 @@ namespace Cloud_System_dev_ops.Controllers
 
             StaffModel staff = _StaffRepo.GetObjects().FirstOrDefault(x => x.StaffId == Permission.StaffId);
 
-            if (staff == null)
+            if (staff == null || staff.PermissionModels == null)
             {
                 return NotFound();
             }
@@ -188,6 +194,7 @@ namespace Cloud_System_dev_ops.Controllers
             {
                 return staff; // to avvoid confusion form staff being null return success full as staff doesnt have permission 
             }
+
             staff.PermissionModels.Remove(toremove);
             
             StaffModel UpdatedStaf = _StaffRepo.UpdateObject(staff);
@@ -204,7 +211,7 @@ namespace Cloud_System_dev_ops.Controllers
         [Route("purchaseAbility")]//route
         [HttpPost]
         [Authorize(Policy = "Staffpol")]
-        public async Task<ActionResult<UserMetaData>> SetPurchaseAbilty(UserMetaData user)
+        public  ActionResult<UserMetaData> SetPurchaseAbilty(UserMetaData user)
         {
 
             if(user == null) // checks data is not null
@@ -217,7 +224,14 @@ namespace Cloud_System_dev_ops.Controllers
             }
 
             user.PurchaseAbility = !user.PurchaseAbility;
-            await _userRepositry.Edituser(user);// calls user
+            
+            UserMetaData livemodel = _userRepositry.Edituser(user).Result;// calls user
+
+            if(livemodel == null)
+            {
+                return BadRequest();
+            }
+
             return user; // returns ediited data
         }
     }
